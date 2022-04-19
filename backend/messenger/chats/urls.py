@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .models import Chat
+from .models import Chat, Messages
 from users.models import Clients
 from rest_framework import routers, serializers, viewsets
 
@@ -23,9 +23,31 @@ class ChatViewSet(viewsets.ModelViewSet):
     serializer_class = ChatsSerializer
 
 
+class MessageSerializer(serializers.HyperlinkedModelSerializer):
+    user_id = serializers.SerializerMethodField('get_user_id')
+
+    def get_user_id(self, obj):
+        return obj.id
+
+    class Meta:
+        model = Messages
+        fields = ['message', 'user_id', 'create_date']
+
+
+class MessageViewSet(viewsets.ModelViewSet):
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        return Messages.objects.filter(chat=self.kwargs['bk'])
+
+
 router = routers.DefaultRouter()
 router.register(r'', ChatViewSet)
 
+router2 = routers.DefaultRouter()
+router2.register(r'messages', MessageViewSet,  basename='reservation')
+
 urlpatterns = [
     path('', include(router.urls)),
+    path('<int:bk>/', include(router2.urls)),
 ]
