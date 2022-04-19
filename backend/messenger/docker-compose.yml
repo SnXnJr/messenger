@@ -1,0 +1,30 @@
+version: "3.3"
+   
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_ROOT_PASSWORD=django
+      - POSTGRES_DB=messenger
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+    ports:
+      - 5432:5432
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/messenger
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_DB=messenger
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=django
+    depends_on:
+      - db
+volumes:
+  postgres_data:
