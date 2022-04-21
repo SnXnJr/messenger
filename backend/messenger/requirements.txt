@@ -3,6 +3,8 @@ Pillow
 django
 djangorestframework
 django-cors-headers
+channels
+channels-redis
 markdown
 django-filter
 psycopg2
