@@ -2,6 +2,13 @@ from django.urls import path, include
 from .models import Clients
 from chats.models import Chat
 from rest_framework import routers, serializers, viewsets
+from django.urls import re_path
+
+from . import consumers
+
+websocket_urlpatterns = [
+    re_path(r'ws/(?P<room_name>\w+)/$', consumers.ChatConsumer),
+]
 
 
 class ContactsSerializer(serializers.ModelSerializer):
