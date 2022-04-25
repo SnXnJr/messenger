@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .models import Chat, Messages
 from users.models import Clients
+from . import views
 from rest_framework import routers, serializers, viewsets
 
 
@@ -48,6 +49,8 @@ router2 = routers.DefaultRouter()
 router2.register(r'messages', MessageViewSet,  basename='reservation')
 
 urlpatterns = [
+    path('rooms', views.index, name='index'),
+    path('rooms/<str:room_name>/', views.room, name='room'),
     path('', include(router.urls)),
     path('<int:bk>/', include(router2.urls)),
 ]

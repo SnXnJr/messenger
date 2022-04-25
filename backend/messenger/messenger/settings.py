@@ -41,7 +41,19 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'chats',
+    'channels',
 ]
+
+ASGI_APPLICATION = 'messenger.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,7 +101,7 @@ DATABASES = {
         'NAME': 'messenger',
         'USER': 'django',
         'PASSWORD': 'django',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

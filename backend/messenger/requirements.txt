@@ -7,3 +7,4 @@ markdown
 django-filter
 psycopg2
 pytz
+channels_redis
