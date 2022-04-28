@@ -1,13 +1,14 @@
 from django.urls import path, include
-from .models import Chat, Messages
-from users.models import Clients
+from .models import Chat, Message
+from users.models import Client
 from . import views
 from rest_framework import routers, serializers, viewsets
 
 
+
 class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Clients
+        model = Client
         fields = ['id', 'first_name', 'last_name']
 
 
@@ -31,7 +32,7 @@ class MessageSerializer(serializers.HyperlinkedModelSerializer):
         return obj.id
 
     class Meta:
-        model = Messages
+        model = Message
         fields = ['message', 'user_id', 'create_date']
 
 
@@ -39,7 +40,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
 
     def get_queryset(self):
-        return Messages.objects.filter(chat=self.kwargs['bk'])
+        return Message.objects.filter(chat=self.kwargs['bk'])
 
 
 router = routers.DefaultRouter()
