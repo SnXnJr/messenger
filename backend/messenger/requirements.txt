@@ -2,6 +2,8 @@ wheel
 Pillow
 django
 djangorestframework
+django-allauth
+django-rest-auth
 django-cors-headers
 markdown
 django-filter
